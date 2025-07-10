@@ -16,6 +16,10 @@ node ace generate:manifest
 echo "📦 Executando migrations..."
 node ace migration:run --force
 
+# Executa os seeders
+echo "🌱 Executando seeders..."
+node ace db:seed
+
 # Inicia o servidor em modo dev (ou use `start` em prod)
 echo "🚀 Iniciando servidor AdonisJS..."
 node ace serve --watch

@@ -1,19 +1,25 @@
+// app/Controllers/Http/TransactionsController.ts
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Transaction from 'App/Models/Transaction'
+import TransactionService from 'App/Services/TransactionService'
+import { CreateTransactionValidator } from 'App/Validators/TransactionValidator'
+import vine from '@vinejs/vine'
 
 export default class TransactionsController {
   public async index() {
-    return await Transaction.query().preload('client').preload('gateway')
+    return await TransactionService.list()
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.only([
-      'client_id',
-      'gateway_id',
-      'external_id',
-      'amount',
-      'card_last_numbers'
-    ])
-    return await Transaction.create(data)
+    const data = await vine.validate({ schema: CreateTransactionValidator, data: request.all() })
+    return await TransactionService.create(data)
   }
+
+  public async show({ params }: HttpContextContract) {
+    return await TransactionService.getById(params.id)
+  }
+
+  public async refund({ params }: HttpContextContract) {
+    return await TransactionService.refund(params.id)
+  }
+
 }
