@@ -20,9 +20,19 @@
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
-    "@adonisjs/lucid"
+    "@adonisjs/lucid",
+    "@adonisjs/auth"
+  ],
+  "types": [
+    "@adonisjs/core",
+    "@adonisjs/lucid",
+    "@adonisjs/auth",
+    "@adonisjs/repl",
+    "@japa/preset-adonis/build/adonis-typings"
   ],
   "aceProviders": [
+    "@adonisjs/repl",
+    "@adonisjs/lucid",
     "@adonisjs/repl"
   ],
   "tests": {
