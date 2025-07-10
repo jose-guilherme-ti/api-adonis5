@@ -30,7 +30,7 @@ export default class PaymentGateway1 {
 
 
   public static async process({ client, card, amount }) {
-    console.log("Estou process da PaymentGateway1")
+    //console.log("Estou process da PaymentGateway1")
     const token = await this.auth()
 
     const response = await axios.post(`${this.baseUrl}/transactions`, {

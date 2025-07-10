@@ -4,7 +4,7 @@
 Sistema construído com **AdonisJS 5 + MySQL**, preparado para lidar com:
 - múltiplos gateways de pagamento,
 - papéis de usuários com permissões distintas (ADMIN, MANAGER, FINANCE, USER),
-- TDD (estrutura japa),
+- TDD com @japa/runner,
 - Docker Compose com MySQL, aplicação e mocks de gateways.
 
 ---
@@ -18,6 +18,7 @@ Sistema construído com **AdonisJS 5 + MySQL**, preparado para lidar com:
 - Axios (HTTP)
 - Lucid ORM
 - JWT Opaque Access Tokens
+- @japa/runner para testes automatizados
 
 ---
 
@@ -38,8 +39,6 @@ Isso irá:
 - subir o AdonisJS na porta 3333
 - subir os mocks de gateways nas portas 3001 e 3002
 
-A primeira vez rodará migrations e seeders automaticamente.
-
 ---
 
 ## ✅ Seeders iniciais
@@ -51,11 +50,6 @@ Usuários criados automaticamente:
 | manager@admin.com      | secret   | MANAGER |
 | finance@admin.com      | secret   | FINANCE |
 | user@admin.com         | secret   | USER    |
-
----
-
-## 📂 Estrutura do banco de dados
-users, gateways, clients, products, transactions, transaction_products
 
 ---
 
@@ -84,6 +78,39 @@ users, gateways, clients, products, transactions, transaction_products
 
 ---
 
+## 🧪 Testes automatizados
+
+### 🚀 Rodando todos os testes
+```bash
+docker compose exec app node ace test
+```
+
+---
+
+## 📂 Estrutura dos testes
+Os testes estão localizados em:
+
+```
+tests/
+ └── functional/
+      ├── auth.spec.ts
+      ├── purchase.spec.ts
+      └── transactions.spec.ts
+```
+
+- `auth.spec.ts` testa login com sucesso e falha com senha errada.
+- `purchase.spec.ts` testa o fluxo completo de checkout.
+- `transactions.spec.ts` lista todas as transações.
+
+---
+
+### 📝 Rodar apenas um arquivo de testes
+```bash
+docker compose exec app node ace test --files "tests/functional/auth.spec.ts"
+```
+
+---
+
 ## 🔑 Autenticação
 ```http
 POST /login
@@ -96,9 +123,7 @@ Authorization: Bearer <token>
 
 ---
 
-## ✅ Exemplos rápidos
-
-### Checkout
+## ✅ Checkout exemplo
 ```http
 POST /purchase
 {
@@ -106,13 +131,6 @@ POST /purchase
   "products": [ { "product_id": 1, "quantity": 2 } ],
   "card": { "number": "5569000000006063", "cvv": "010" }
 }
-```
-
----
-
-## 🧪 Testes
-```bash
-docker compose exec app node ace test
 ```
 
 ---
