@@ -1,0 +1,927 @@
+type: collection.insomnia.rest/5.0
+name: Multi-Gateways Mock APIs
+meta:
+  id: wrk_c405105d1fb94cc2a72dbfb1fdae726a
+  created: 1751938207796
+  modified: 1751938207796
+  description: ""
+collection:
+  - name: Multi-Gateways Mock APIs
+    meta:
+      id: fld_6a5dcf7c95e446b196f814c4c4a62671
+      created: 1751938207799
+      modified: 1751938212864
+      sortKey: -1751938205439
+      description: >-
+        Para iniciar os mocks:
+
+
+        **Com autenticação:**
+
+        ```bash
+
+        docker run -p 3001:3001 -p 3002:3002 matheusprotzen/gateways-mock
+
+        ```
+
+
+        **Sem autenticação:**
+
+        ```bash
+
+        docker run -p 3001:3001 -p 3002:3002 -e REMOVE_AUTH='true'
+        matheusprotzen/gateways-mock
+
+        ```
+    children:
+      - name: Gateway 1
+        meta:
+          id: fld_8c0cddc798bd4099b8cb8893e22c830a
+          created: 1751938207800
+          modified: 1751938207800
+          sortKey: -1751938205438
+          description: ""
+        children:
+          - url: http://localhost:3001/login
+            name: Login
+            meta:
+              id: req_d83007a5fbb84e4885efadd5fd07e169
+              created: 1751938207801
+              modified: 1751938207801
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205437
+            method: POST
+            body:
+              mimeType: text/plain
+              text: |-
+                {
+                    "email": "dev@betalent.tech",
+                    "token": "FEC9BB078BF338F464F96B48089EB498"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3001/transactions
+            name: List Transactions
+            meta:
+              id: req_190017fa533f4156b158b1976c3ea75a
+              created: 1751938207802
+              modified: 1751938297976
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205436
+            method: GET
+            authentication:
+              type: bearer
+              disabled: false
+              token: "{{gateway1_token}}"
+              prefix: ""
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3001/transactions
+            name: Create Transaction
+            meta:
+              id: req_21183dabde644082a6c824b0f29148c9
+              created: 1751938207803
+              modified: 1752108531659
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205435
+            method: POST
+            body:
+              mimeType: text/plain
+              text: |-
+                {
+                    "amount": 1000,
+                    "name": "tester",
+                    "email": "tester@email.com",
+                    "cardNumber": "5569000000006063",
+                    "cvv": "010"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            authentication:
+              type: bearer
+              disabled: false
+              token: "{{gateway1_token}}"
+              prefix: ""
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3001/transactions/995c802f-146e-463b-93dc-7bd013fa89eb/charge_back
+            name: Chargeback
+            meta:
+              id: req_2f06202f9f6d43ec8ac41336945c892b
+              created: 1751938207804
+              modified: 1752109264057
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205434
+            method: POST
+            authentication:
+              type: bearer
+              disabled: false
+              token: "{{gateway1_token}}"
+              prefix: ""
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - name: Gateway 2
+        meta:
+          id: fld_8806b07d7710438b92f21069d5abd46b
+          created: 1751938207805
+          modified: 1751938207805
+          sortKey: -1751938205433
+          description: ""
+        children:
+          - url: http://localhost:3002/transacoes
+            name: Listar Transações
+            meta:
+              id: req_9c8b5bbf9c914000833e3c08858c9adf
+              created: 1751938207805
+              modified: 1751938207805
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205432
+            method: GET
+            headers:
+              - name: Gateway-Auth-Token
+                value: tk_f2198cc671b5289fa856
+              - name: Gateway-Auth-Secret
+                value: 3d15e8ed6131446ea7e3456728b1211f
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3002/transacoes
+            name: Criar Transação
+            meta:
+              id: req_5ce6fb83fe2148fbb1c2f2fe7504a3a2
+              created: 1751938207806
+              modified: 1752010207456
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205431
+            method: POST
+            body:
+              mimeType: text/plain
+              text: |-
+                {
+                    "valor": 1000,
+                    "nome": "teste3",
+                    "email": "tester@email.com",
+                    "numeroCartao": "5569000000006063",
+                    "cvv": "010"
+                }
+            headers:
+              - name: Gateway-Auth-Token
+                value: tk_f2198cc671b5289fa856
+              - name: Gateway-Auth-Secret
+                value: 3d15e8ed6131446ea7e3456728b1211f
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3002/transacoes/reembolso
+            name: Reembolso
+            meta:
+              id: req_d8c3ec45c55a4d12bba96d3bbf35b069
+              created: 1751938207807
+              modified: 1752156371660
+              isPrivate: false
+              description: ""
+              sortKey: -1751938205430
+            method: POST
+            body:
+              mimeType: text/plain
+              text: |-
+                {
+                    "id": "5fcce37a-d477-4431-adc8-f4bbd35920fe"
+                }
+            headers:
+              - name: Gateway-Auth-Token
+                value: tk_f2198cc671b5289fa856
+              - name: Gateway-Auth-Secret
+                value: 3d15e8ed6131446ea7e3456728b1211f
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+  - name: Rotas Públicas
+    meta:
+      id: fld_4b7bb9b1f01540bd9be62f5f61517f8b
+      created: 1752109080582
+      modified: 1752109080582
+      sortKey: -1752109080582
+      description: ""
+    children:
+      - url: "{{ base_url }}/login"
+        name: Login
+        meta:
+          id: req_ad87fa59db7a463d9caae9718e2288f4
+          created: 1752109080585
+          modified: 1752262485755
+          isPrivate: false
+          description: ""
+          sortKey: -1752109080585
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "finance@admin.com",
+              "password": "secret"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ base_url }}/purchase"
+        name: Gastar Dinheiro( Compra de produto com cartão)
+        meta:
+          id: req_bbad8e77e4414a89b627252432ab8659
+          created: 1752174151954
+          modified: 1752262731830
+          isPrivate: false
+          description: ""
+          sortKey: -1752109080686
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "client": {
+              "name": "José Guilherme",
+            	"email": "jose.guilherme.ti@client.com"
+              },
+              "products": [
+                { "product_id": 1, "quantity": 2 },
+                { "product_id": 3, "quantity": 1 }
+              ],
+              "card": {
+                "number": "5569000000006063",
+                "cvv": "123"
+              }
+            }
+        parameters:
+          - id: pair_68408e1d77714824b4a89d5002eb8a57
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_902f5e8040ac40c99b422623ce5d4f19
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            id: pair_8ee384b3336246b08ab5f301d1c7df75
+            disabled: true
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Rotas Privadas
+    meta:
+      id: fld_15531f9b34be4faa8f87abb83326b664
+      created: 1752109080584
+      modified: 1752109080584
+      sortKey: -1752109080584
+      description: ""
+    children:
+      - name: Produtos
+        meta:
+          id: fld_4e6a06cecd1c4a5e854cd2c792d1644a
+          created: 1752171939827
+          modified: 1752171939827
+          sortKey: -1752171939827
+          description: ""
+        children:
+          - url: "{{ base_url }}/api/products"
+            name: Criar Produto
+            meta:
+              id: req_54d22a49063348989155e913a6936b4f
+              created: 1752109080592
+              modified: 1752172254298
+              isPrivate: false
+              description: ""
+              sortKey: -1752171944328
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                		"name": "Produto Criado",
+                		"amount": "150.00"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_45862660968c43388b56c784c56981e2
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_c9bfc8d31d0148c7baf1c2965cb64714
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/products/16"
+            name: Visualizar Produto
+            meta:
+              id: req_34e7a365fdef498983c66588ccdfe8ff
+              created: 1752109080593
+              modified: 1752172293353
+              isPrivate: false
+              description: ""
+              sortKey: -1752171944228
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_88249a50135a4e319987d7da9cc4c332
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_9eff16883e7c4b818a0998414c9b2161
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/products"
+            name: Listar Produtos
+            meta:
+              id: req_9843f2baf8b84b0783017345e26c57e9
+              created: 1752109080593
+              modified: 1752172203911
+              isPrivate: false
+              description: ""
+              sortKey: -1752171944528
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_2ccf64b88bcf450ca1cac62f0cec67e4
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_a029c0e6ef734a81bd1191beded509d1
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/products/15"
+            name: Atualizar Produto
+            meta:
+              id: req_b8d6386e2bc348a0bccc8531ecef5a51
+              created: 1752109080594
+              modified: 1752172206714
+              isPrivate: false
+              description: ""
+              sortKey: -1752171944428
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"name": "Produto Z put"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_3c841778867c41948c128006a9178b3a
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_2e121a8cc4864b799600162cb82dd041
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/products/16"
+            name: Excluir Produto
+            meta:
+              id: req_b1e65935226d489bb6af690e0e2c9291
+              created: 1752109080595
+              modified: 1752172314815
+              isPrivate: false
+              description: ""
+              sortKey: -1752171944128
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_ad5a123c8f85433381b8e39bc29736db
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_b7b385ff1cb344da8968992583f4c458
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Clientes
+        meta:
+          id: fld_6788aab19f764b6d88c001358ab68f01
+          created: 1752171978190
+          modified: 1752171978190
+          sortKey: -1752171978190
+          description: ""
+        children:
+          - url: "{{ base_url }}/api/clients"
+            name: Listar Clientes
+            meta:
+              id: req_8d7f17d435b6416eab15d7f615ed1e97
+              created: 1752109080595
+              modified: 1752172116050
+              isPrivate: false
+              description: ""
+              sortKey: -1752171981550
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_fb946391ec8a4bdcb26244b7f0477004
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_55fdf4fbcb8944cab7bb8d7b6fc480ff
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/clients/15"
+            name: Detalhar Cliente
+            meta:
+              id: req_f62cbee13a5d47dc91211c8b3d0e5469
+              created: 1752109080597
+              modified: 1752172141929
+              isPrivate: false
+              description: ""
+              sortKey: -1752171981450
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_874ea21e924041bab6c2e8e245d9e46c
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_e22acb097c744597b506c32218ca2827
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Usuario
+        meta:
+          id: fld_bfb6073dded94bf4bba01f88fe916e34
+          created: 1752172007543
+          modified: 1752172007543
+          sortKey: -1752172007544
+          description: ""
+        children:
+          - url: "{{ base_url }}/api/users"
+            name: Criar Usuário
+            meta:
+              id: req_708594e7218341d08ed2315139376da3
+              created: 1752109080588
+              modified: 1752173414993
+              isPrivate: false
+              description: ""
+              sortKey: -1752172027828
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"email":"novo@admin.com",
+                	"password":"secret",
+                	"role":"USER"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_e66db5f4ef2745c0900559001793850a
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_5c376e581f3649dea9acb51d441369c1
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/users/29"
+            name: Visualizar Usuário
+            meta:
+              id: req_7a307aad903049a2b5bb6d34f47b8d27
+              created: 1752109080589
+              modified: 1752173096223
+              isPrivate: false
+              description: ""
+              sortKey: -1752172027728
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_5ac87e8e949c42f0a7a9b52b3c070c42
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_c12e68e3cdba4b96aec90b0373d6c9bd
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/users"
+            name: Listar Usuários
+            meta:
+              id: req_f27089b7a75246ccbc74934863141c92
+              created: 1752109080589
+              modified: 1752172039199
+              isPrivate: false
+              description: ""
+              sortKey: -1752172027928
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_85058c437c824608b9db7a002f894f8e
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_f00871d937624d22ac3d61d75c6145f9
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/users/33"
+            name: Atualizar Usuário
+            meta:
+              id: req_18b777d2b63e41448f0a386d3d457ed4
+              created: 1752109080590
+              modified: 1752173466459
+              isPrivate: false
+              description: ""
+              sortKey: -1752172028028
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"role": "FINANCE"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_5927f978ffb448159ee1c268464c4dc1
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_f54c744e00e8422ca20add9b8ccc56e6
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/users/31"
+            name: Excluir Usuário
+            meta:
+              id: req_4e7c79d8355d483b95f93db96f608b06
+              created: 1752109080591
+              modified: 1752173261655
+              isPrivate: false
+              description: ""
+              sortKey: -1752172028128
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_57185cf23e014500a7a1a48649852b36
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_357ec2477bbf497197367dece0da5485
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Compra
+        meta:
+          id: fld_e76d71ddf63a4f03977299b595e090e4
+          created: 1752172059161
+          modified: 1752172059161
+          sortKey: -1752172059161
+          description: ""
+        children:
+          - url: "{{ base_url }}/api/transactions"
+            name: Listar Compras
+            meta:
+              id: req_e6eb336bfc03470f95c22e48884f15ad
+              created: 1752109080597
+              modified: 1752173834017
+              isPrivate: false
+              description: ""
+              sortKey: -1752172075220
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_d7741655776d4f058ade8403563b131d
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_25b11f17e03841b7ba38082873a0a290
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/transactions/1"
+            name: Detalhar Compra
+            meta:
+              id: req_a2bd5a88f42b463088ebe94bfa9ed1ac
+              created: 1752109080598
+              modified: 1752262221294
+              isPrivate: false
+              description: ""
+              sortKey: -1752172075320
+            method: GET
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_573c9c6ce2074650b6028fba184c77c0
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_1dc9a85597a5406fac9723ba68e58606
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/transactions/1/refund"
+            name: Reembolsar Compra
+            meta:
+              id: req_b80259d8e1a14b859cff807441479b68
+              created: 1752109080599
+              modified: 1752262189770
+              isPrivate: false
+              description: ""
+              sortKey: -1752172075120
+            method: POST
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_902f5e8040ac40c99b422623ce5d4f19
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_8ee384b3336246b08ab5f301d1c7df75
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Gateway
+        meta:
+          id: fld_5ccd86c4ba914978a9d0fc8545cc9f4e
+          created: 1752172089008
+          modified: 1752172089008
+          sortKey: -1752172089008
+          description: ""
+        children:
+          - url: "{{ base_url }}/api/gateways/1/activate"
+            name: Ativar/Desativar Gateway
+            meta:
+              id: req_7a2c312af84b41b792c09dabd340d321
+              created: 1752109080586
+              modified: 1752178202389
+              isPrivate: false
+              description: ""
+              sortKey: -1752172093608
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: "{}"
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_97c31738126943d7be965cc5501e04a8
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_3261ab9ec56e4df0ac7d13e82ac9466b
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ base_url }}/api/gateways/1/priority"
+            name: Alterar Prioridade do Gateway
+            meta:
+              id: req_e2b82c66aca546869d65b07587e4fb69
+              created: 1752109080587
+              modified: 1752178685946
+              isPrivate: false
+              description: ""
+              sortKey: -1752172093708
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"priority": 3
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+                id: pair_e83dba3b861249efbe0cd498f41f1515
+              - name: Authorization
+                value: Bearer {{ _.token }}
+                id: pair_340b1adb6c0e4e2291cc6151a19ab8ee
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_a3b0e821bf94a2468f8df45f89466065fb37d088
+    created: 1751938207810
+    modified: 1751938207810
+environments:
+  name: Base Environment
+  meta:
+    id: env_a3b0e821bf94a2468f8df45f89466065fb37d088
+    created: 1751938207809
+    modified: 1752173383140
+    isPrivate: false
+  data:
+    gateway1_token: "{% response 'body', 'req_d83007a5fbb84e4885efadd5fd07e169',
+      'b64::JC50b2tlbg==::46b', 'when-expired', 720 %}"
+    base_url: http://localhost:3333
+    token: "{% response 'body', 'req_ad87fa59db7a463d9caae9718e2288f4',
+      'b64::JC50b2tlbg==::46b', 'when-expired', 720 %}"

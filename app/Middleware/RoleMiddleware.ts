@@ -9,7 +9,7 @@ export default class RoleMiddleware {
     await auth.use('api').authenticate()
 
     const user = auth.user!
-
+    
     if (!user || !allowedRoles.includes(user.role)) {
       return response.forbidden({ message: 'Acesso negado' })
     }

@@ -39,7 +39,6 @@ export default class TransactionService {
 
   public static async create(payload: TransactionPayload) {
     const client = await ClientService.findOrCreate(payload.client)
-
     let amount = 0
     for (const item of payload.products) {
       const product = await Product.findOrFail(item.product_id)
